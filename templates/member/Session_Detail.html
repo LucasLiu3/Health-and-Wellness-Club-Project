@@ -1,0 +1,203 @@
+{% extends 'layout.html' %} {% block content %}
+<style>
+  .info-row {
+    font-size: 1.5em; /* Increase font size */
+    line-height: 1.5; /* Adjust line height */
+    text-align: left; /* Align text to the left */
+    margin-bottom: 10px; /* Reduce space between rows */
+  }
+  .info-row .col-md-6 {
+    padding: 0; /* Remove padding */
+  }
+  .info-row .col-md-6:first-child {
+    font-weight: bold; /* Make labels bold */
+  }
+</style>
+<div class="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      <h2>Session Detail</h2>
+      <div class="container" style="margin-top: 50px">
+        <div class="row info-row">
+          <div class="col-md-6">Session Name:</div>
+          <div class="col-md-6">{{record.Session_name}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Fee:</div>
+          <div class="col-md-6">{{record.Fee}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Duration:</div>
+          <div class="col-md-6">{{record.Duration}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Therapist First Name:</div>
+          <div class="col-md-6">{{record.First_name}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Therapist Last Name:</div>
+          <div class="col-md-6">{{record.Last_name}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Therapist Email:</div>
+          <div class="col-md-6">{{record.Email}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Room_num:</div>
+          <div class="col-md-6">{{record.Room_num}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Description:</div>
+          <div class="col-md-6">{{record.Description}}</div>
+        </div>
+
+        <form id="paymentForm">
+          <div
+            class="row info-row bankInfo"
+            style="margin-top: 30px; display: flex; flex-direction: column"
+          >
+            <label for="">Bank Card</label>
+            <input
+              type="text"
+              name="bankcard"
+              pattern="\d{16}"
+              title="Please enter a 16-digit bank card number."
+              placeholder="16-digit bank card number"
+              required
+            />
+            <label>Expire Day</label>
+            <input
+              type="text"
+              id="card_expire_day"
+              name="card_expire_day"
+              pattern="(0[1-9]|1[0-2])\/\d{2}"
+              title="Please enter the card expiration date in mm/yy format."
+              placeholder="mm/yy"
+              required
+              oninput="validateExpirationDate(this)"
+            />
+            <label>Security Code</label>
+            <input
+              type="text"
+              name="security"
+              placeholder="xxx"
+              pattern="\d{3}"
+              title="Please enter a 3-digit security code."
+              required
+            />
+
+            <div>
+              <button
+                type="submit"
+                class="btn btn-primary btn-pay"
+                style="width: 100px; margin-top: 10px"
+              >
+                Pay
+              </button>
+              <button
+                class="btn btn-primary btn-pay"
+                style="width: 100px; margin-top: 10px; margin-left: 30px"
+              >
+                <a
+                  href="/member/session"
+                  style="color: white; text-decoration: none"
+                  >Cancel</a
+                >
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div>
+          <p class="message" style="color: red"></p>
+
+          <form
+            action="/member/session_join"
+            method="POST"
+            style="display: none"
+            class="join_form"
+          >
+            <input type="hidden" name="member_id" value="{{memberid}}" />
+            <input
+              type="hidden"
+              name="session_id"
+              value="{{record.Session_id}}"
+            />
+            <input type="hidden" name="fee" value="{{record.Fee}}" />
+            <select name="weekday" class="form-control">
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
+            <div style="margin-top: 20px">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="margin-right: 10px"
+              >
+                Booking
+              </button>
+              <button type="button" class="btn btn-dark cancel_btn">
+                <a
+                  href="/member/session"
+                  style="text-decoration: none; color: white"
+                  >Cancel</a
+                >
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("paymentForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+      const message = document.querySelector(".message");
+      const joinForm = document.querySelector(".join_form");
+      const bankInfo = document.querySelector(".bankInfo");
+      const paymentForm = document.getElementById("paymentForm");
+      const payBtn = document.querySelector(".btn-pay");
+
+      payBtn.style.width = "150px";
+      payBtn.textContent = "Processing....";
+
+      setTimeout(function () {
+        bankInfo.style.display = "none";
+        message.textContent = "Payment successful";
+
+        joinForm.style.display = "block";
+      }, 1500);
+    });
+
+  function validateExpirationDate(input) {
+    var today = new Date();
+    var inputParts = input.value.split("/");
+    var inputMonth = parseInt(inputParts[0], 10);
+    var inputYear = parseInt(inputParts[1], 10);
+
+    console.log(inputMonth, inputYear);
+    console.log(today.getFullYear() - 2000);
+    console.log(today.getMonth() + 1);
+
+    if (
+      inputYear < today.getFullYear() - 2000 ||
+      (inputYear === today.getFullYear() - 2000 &&
+        inputMonth < today.getMonth() + 1)
+    ) {
+      input.setCustomValidity("Please input a correct expire day.");
+    } else {
+      input.setCustomValidity("");
+    }
+  }
+</script>
+
+{% endblock %}

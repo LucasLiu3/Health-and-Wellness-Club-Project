@@ -1,0 +1,56 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      {% if record.Room_id != "" %}
+      <h2 class="mb-4">Update Room</h2>
+      {% else %}
+      <h2 class="mb-4">Add New Room</h2>
+      {% endif %} {% for message in get_flashed_messages() %}
+      <div class="flash" style="color: red; font-size: 20px">{{ message }}</div>
+      {% endfor %}
+      <input
+        type="hidden"
+        id="Room_id"
+        name="Room_id"
+        value="{{record.Room_id}}"
+      />
+      <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="Room_name">Room Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            value="{{record.Room_name}}"
+            required
+            id="Room_name"
+            name="Room_name"
+            placeholder="Enter Room Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="Room_type">Room Type:</label>
+          <select class="form-control" name="Room_type" id="Room_type">
+            {% for _type in Room_types %} {% if Room_type== _type %}
+            <option value="{{_type}}" selected="selected">{{_type}}</option>
+            {% else %}
+            <option value="{{_type}}">{{_type}}</option>
+            {% endif %} {% endfor %}
+          </select>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary">
+          Save
+        </button>
+
+        <button type="button" class="btn btn-primary" style="margin-left: 50px">
+          <a href="/manager/room" style="color: white; text-decoration: none"
+            >Cancel</a
+          >
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

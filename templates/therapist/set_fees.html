@@ -1,0 +1,28 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container" style="margin-top: 50px">
+  <h2>Set Fees for {{ session[0] }}</h2>
+  <form action="" method="POST">
+    <div class="form-group" style="margin-top: 50px">
+      <label for="new_fee">New Fee ($)</label>
+      <input
+        type="number"
+        class="form-control"
+        id="new_fee"
+        name="new_fee"
+        value="{{ session[1] }}"
+        max="150"
+        min="80"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="button" class="btn btn-primary" style="margin-left: 50px">
+      <a
+        href="/therapist/my_sessions"
+        style="color: white; text-decoration: none"
+        >Cancel</a
+      >
+    </button>
+  </form>
+</div>
+{% endblock %}

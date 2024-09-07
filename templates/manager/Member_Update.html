@@ -1,0 +1,293 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      {% if record.username != "" %}
+      <h2>Update Member</h2>
+      {% else %}
+      <h2>New Member</h2>
+      {% endif %} {% for message in get_flashed_messages() %}
+      <div class="flash" style="color: red; font-size: 20px">{{ message }}</div>
+      {% endfor %}
+      <input
+        type="hidden"
+        id="ori_username"
+        name="ori_username"
+        value="{{username}}"
+      />
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        style="margin-top: 50px"
+      >
+        <div class="form-group row">
+          <label for="username" class="col-md-2 col-form-label"
+            >User Name:</label
+          >
+          <div class="col-md-10">
+            {% if record.username %}
+            <input
+              type="text"
+              class="form-control"
+              disabled="disabled"
+              value="{{record.username}}"
+              required
+              id="username"
+              name="username"
+              placeholder="Enter User Name"
+            />
+            {% else %}
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.username}}"
+              required
+              id="username"
+              name="username"
+              placeholder="Enter User Name"
+            />
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="password" class="col-md-2 col-form-label"
+            >Password:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.password}}"
+              required
+              id="password"
+              name="password"
+              placeholder="Enter Password"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Title" class="col-md-2 col-form-label">Title:</label>
+          <div class="col-md-10">
+            <select class="form-control" id="Title" name="Title" required>
+              <option value="Mr." selected>Mr.</option>
+              <option value="Ms.">Ms.</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="First_name" class="col-md-2 col-form-label"
+            >First Name:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.First_name}}"
+              required
+              id="First_name"
+              name="First_name"
+              placeholder="Enter First Name"
+              pattern="[A-Za-z]+"
+              title="First name should only contain letters."
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Last_name" class="col-md-2 col-form-label"
+            >Last Name:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.Last_name}}"
+              required
+              id="Last_name"
+              name="Last_name"
+              placeholder="Enter Last Name"
+              pattern="[A-Za-z]+"
+              title="Last name should only contain letters."
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="position" class="col-md-2 col-form-label"
+            >Position:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.Position}}"
+              required
+              id="Position"
+              name="Position"
+              placeholder="Enter Position"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Email" class="col-md-2 col-form-label">Email:</label>
+          <div class="col-md-10">
+            <input
+              type="email"
+              class="form-control"
+              value="{{record.Email}}"
+              required
+              id="Email"
+              name="Email"
+              placeholder="Enter Email"
+            />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Phone_number" class="col-md-2 col-form-label"
+            >Phone:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.Phone_number}}"
+              required
+              id="Phone_number"
+              name="Phone_number"
+              placeholder="Enter Work Phone"
+              pattern="\d{10,}"
+              title="Phone number must be at least 10 digits long."
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Phone_number" class="col-md-2 col-form-label"
+            >Address:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.Address}}"
+              required
+              id="Address"
+              name="Address"
+              placeholder="Enter Address"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="date_of_Birth" class="col-md-2 col-form-label"
+            >Birth:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="date"
+              class="form-control"
+              value="{{record.date_of_Birth}}"
+              required
+              name="date_of_Birth"
+              id="date_of_Birth"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="UploadImage" class="col-md-2 col-form-label"
+            >Picture:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="file"
+              class="form-control"
+              id="UploadImage"
+              name="UploadImage"
+              placeholder="Upload an image"
+              required
+            />
+            {% if record.Image%}
+            <img
+              id="img"
+              name="img"
+              src="/static/{{record.Image}}"
+              style="width: 100px; height: 100px; margin-top: 10px"
+            />
+            {% endif %}
+            <input
+              type="hidden"
+              id="Image"
+              name="Image"
+              value="{{record.Image}}"
+            />
+            <br />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Heath_Information" class="col-md-2 col-form-label"
+            >Heath Information:</label
+          >
+          <div class="col-md-10">
+            <input
+              type="text"
+              class="form-control"
+              value="{{record.Heath_Information}}"
+              id="Heath_Information"
+              name="Heath_Information"
+              placeholder="Enter Heath Information"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Status" class="col-md-2 col-form-label">Status:</label>
+
+          <div class="col-md-10">
+            <select class="form-control" id="Status" name="Status" required>
+              <option value="active">active</option>
+              <option value="inactive">inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary">
+          Save
+        </button>
+        <button type="button" class="btn btn-primary" style="margin-left: 50px">
+          <a href="/manager/members" style="color: white; text-decoration: none"
+            >Cancel</a
+          >
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  document
+    .getElementById("UploadImage")
+    .addEventListener("change", function (event) {
+      var file = event.target.files[0];
+
+      var formData = new FormData();
+
+      formData.append("file", file);
+
+      fetch("/manager/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("Image").value = data.file_path;
+          document.getElementById("img").src = "/static/" + data.file_path;
+        })
+        .catch((error) => console.error("Error:", error));
+    });
+
+  var selectElement = document.getElementById("Title");
+
+  selectElement.value = "{{record.Title}}";
+  var selectElement = document.getElementById("Status");
+
+  selectElement.value = "{{record.Status}}";
+</script>
+{% endblock %}

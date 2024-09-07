@@ -1,0 +1,125 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="content" style="margin-top: 30px">
+  <div
+    class="row justify-content-center"
+    style="overflow-y: scroll; max-height: 90vb"
+  >
+    <div
+      class="col-md-10 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>Class Timetable</h2>
+
+      {% if disable_Booking %}
+
+      <div style="margin-bottom: 15px">
+        <h3 style="color: red; display: inline">
+          Your membership is expired, Please renew it for booking.
+          <a
+            href="{{ url_for('renew_subscription', membership_id=membershipId) }}"
+            style="display: inline"
+            >Renew</a
+          >
+        </h3>
+      </div>
+      {% endif %}
+      <table
+        class="table table-striped table-bordered table-hover"
+        style="margin-top: 50px"
+      >
+        <tr>
+          <th>Day</th>
+          <th>Class Name</th>
+          <th>Class Description</th>
+          <th>Max Capacity</th>
+          <th>Booking number</th>
+          <th>Duration</th>
+          <th>Therapist Name</th>
+          <th>Room Num</th>
+          <th>Action</th>
+        </tr>
+
+        {% for class in class_list %}
+        <form action="/member/class_join" method="POST" class="join_form">
+          <tr>
+            <input type="hidden" name="member_id" value="{{memberid}}" />
+            <input type="hidden" name="class_id" value="{{class[9]}}" />
+            <input type="hidden" name="weekday" value="{{class[0]}}" />
+            <td>{{class[0]}}</td>
+            <td>{{class[1]}}</td>
+            <td>{{class[2]}}</td>
+            <td>{{class[3]}}</td>
+            <td>{{class[8]}}</td>
+            <td>{{class[4]}}</td>
+            <td>{{class[6]}} {{class[7]}}</td>
+            <td>{{class[5]}}</td>
+            <td>
+              {% if class[8] >= class[3] %}
+              <button class="btn btn-dark" disabled>Full</button>
+
+              {% elif class[10] is not none %}
+              <button class="btn btn-dark" disabled>Booked</button>
+
+              {% else %}
+
+              <button
+                type="submit"
+                class="btn btn-primary"
+                {%
+                if
+                disable_Booking
+                %}
+                disabled
+                {%
+                endif
+                %}
+              >
+                Book
+              </button>
+
+              {% endif %}
+            </td>
+          </tr>
+        </form>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+<style>
+  .button-container {
+    display: flex;
+    align-items: center; /* 垂直居中对齐 */
+    justify-content: center; /* 水平居中对齐 */
+  }
+
+  .join_btn {
+    margin-right: 10px; /* 可根据实际需要调整按钮之间的间距 */
+  }
+</style>
+
+<script>
+  const join_btns = document.querySelectorAll(".join_btn");
+  const join_forms = document.querySelectorAll(".join_form");
+  const cancel_btns = document.querySelectorAll(".cancel_btn");
+
+  join_btns.forEach((btn, index) =>
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      join_forms[index].style.display = "block";
+      btn.style.display = "none";
+    })
+  );
+
+  cancel_btns.forEach((btn, index) =>
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      join_forms[index].style.display = "none";
+      join_btns[index].style.display = "block";
+      join_btns[index].style.justifyContent = "center";
+    })
+  );
+</script>
+{% endblock %}

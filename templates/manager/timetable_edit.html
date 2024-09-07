@@ -1,0 +1,66 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="content" style="margin-top: 30px;">
+  <div class="row justify-content-center" style="overflow-y: scroll; max-height: 90vb">
+    <div
+      class="col-md-9 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>Class Timetable Edit</h2>
+
+      <form action="/manager/timetable" method="POST" style="margin-top: 50px;">
+        <table class="table table-striped table-bordered table-hover">
+          <tr>
+            <th>Timetable ID</th>
+            <th>Time</th>
+            <th>Class Name</th>
+            <th>Therapist Name</th>
+            <th>Room Num</th>
+          </tr>
+          {% for class in classes %}
+          <tr>
+            <td >{{class[0]}}</td>
+            <input type="hidden" name="timetableId" value="{{ class[0] }}">
+            <input type="hidden" name="classId" value="{{ class[2] }}">
+            <td>
+                <select name="weekday">
+                    <option value="Monday" {% if class[1] == 'Monday' %} selected {% endif %}>Monday</option>
+                    <option value="Tuesday" {% if class[1] == 'Tuesday' %} selected {% endif %}>Tuesday</option>
+                    <option value="Wednesday" {% if class[1] == 'Wednesday' %} selected {% endif %}>Wednesday</option>
+                    <option value="Thursday" {% if class[1] == 'Thursday' %} selected {% endif %}>Thursday</option>
+                    <option value="Friday" {% if class[1] == 'Friday' %} selected {% endif %}>Friday</option>
+                    <option value="Saturday" {% if class[1] == 'Saturday' %} selected {% endif %}>Saturday</option>
+                    <option value="Sunday" {% if class[1] == 'Sunday' %} selected {% endif %}>Sunday</option>
+                </select>
+            </td>
+            <td>{{class[3]}}</td>
+            <td>
+                <select name="therapist_id" >
+                    {% for therapist in therapist_list %}
+                    <option value="{{therapist[0]}}" {% if class[5] == therapist[1] and class[6] == therapist[2] %} selected {% endif %}>{{therapist[2]}} {{therapist[1]}}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+               <select name="room_id" >
+                {% for room in room_list %}
+                <option value="{{room}}" {% if class[4] == room %} selected {% endif %}>{{room}}</option>
+                {% endfor %}
+               </select>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        <button type="submit"  class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-primary" style="margin-left: 50px">
+            <a
+              href="/manager/timetable"
+              style="color: white; text-decoration: none"
+              >Cancel</a
+            >
+          </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

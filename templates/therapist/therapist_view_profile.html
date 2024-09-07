@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Therapist Profile</h2>
+    <form method="POST" action="{{ url_for('update_therapist_profile') }}" enctype="multipart/form-data">
+        <div class="row">
+            <!-- Profile Image Upload Section -->
+            <div class="col-md-4 text-center mb-4">
+                <img src="{{ url_for('static', filename=therapist_image) }}" alt="Profile Image" class="img-thumbnail mb-2" style="max-width: 200px; max-height: 200px;">
+                <div class="form-group">
+                    <label for="profile_image" class="btn btn-outline-secondary btn-sm">Choose New Image</label>
+                    <input type="file" class="form-control-file d-none" id="profile_image" name="profile_image" onchange="document.getElementById('imageLabel').innerHTML = this.files[0].name;">
+                    <small id="imageLabel" class="form-text text-muted">No file chosen</small>
+                </div>
+            </div>
+            <!-- Personal Details Section -->
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="title">Title</label>
+                        <select class="form-control" id="title" name="title" required>
+                            <option {{ 'selected' if therapist[1] == "Mr." else '' }}>Mr.</option>
+                            <option {{ 'selected' if therapist[1] == "Ms." else '' }}>Ms.</option>
+                            <option {{ 'selected' if therapist[1] == "Mrs." else '' }}>Mrs.</option>
+                            <option {{ 'selected' if therapist[1] == "Dr." else '' }}>Dr.</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{therapist[2]}}" required pattern="[A-Za-z]+" title="First name should only contain letters.">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{therapist[3]}}" required pattern="[A-Za-z]+" title="Last name should only contain letters.">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ therapist[5] }}" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="specialty">Specialty</label>
+                        <input type="text" class="form-control" id="specialty" name="specialty" value="{{ therapist[6] }}" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ therapist[7] }}" required pattern="\d{10,}" title="Phone number must be at least 10 digits long.">
+                    </div>
+                </div>
+
+                {% with messages = get_flashed_messages() %} {% if messages %}
+                <p style="color: red">{{messages[0]}}</p>
+                {% endif %} {% endwith %}
+        
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container" style="margin-top: 50px">
+  <h2>Edit for {{ session_details[1] }}</h2>
+  <form action="" method="POST">
+    <div class="form-group" style="margin-top: 50px">
+      <label for="new_fee">Session Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="new_fee"
+        name="new_name"
+        value="{{ session_details[1] }}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="new_fee">Description</label>
+      <textarea
+        type="text"
+        class="form-control"
+        id="new_fee"
+        name="new_description"
+        required
+      >
+{{ session_details[2] }}</textarea
+      >
+    </div>
+    <div class="form-group">
+      <label for="new_fee">Duration</label>
+      <input
+        type="number"
+        class="form-control"
+        id="new_fee"
+        name="new_duration"
+        value="{{ session_details[3] }}"
+        max="60"
+        min="30"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="button" class="btn btn-primary" style="margin-left: 50px">
+      <a
+        href="/therapist/my_sessions"
+        style="color: white; text-decoration: none"
+        >Cancel</a
+      >
+    </button>
+  </form>
+</div>
+{% endblock %}

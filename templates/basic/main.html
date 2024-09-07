@@ -1,0 +1,212 @@
+{% extends './basic/base.html' %} {% block content %}
+
+<header class="header">
+  <nav
+    class="nav"
+    style="
+      margin-top: 10px;
+      border-bottom: solid 1px black;
+      background-color: #444;
+    "
+  >
+    <a href="/">
+      <img
+        src="../static/logo-white.png"
+        alt="club logo"
+        class="nav__logo"
+        id="logo"
+      />
+    </a>
+    <ul class="nav__links">
+      <li class="nav__item">
+        <a class="nav__link nav__link--btn" href="/login" style="color: white"
+          >Log in</a
+        >
+      </li>
+      <li class="nav__item">
+        <a
+          class="nav__link nav__link--btn"
+          href="/register"
+          style="color: white; border: 1px solid white"
+          >Sign Up</a
+        >
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<div
+  name="container"
+  style="
+    flex-grow: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100px;
+    width: 2400px;
+    background-image: url('../static/background2.jpg');
+
+    background-color: white;
+    opacity: 0.8;
+  "
+>
+  <div
+    name="slogan"
+    style="
+      color: black;
+      font-size: 33px;
+      text-align: center;
+      font-weight: bold; /* 设置字体粗细为粗体 */
+      font-family: 'Arial', sans-serif; /* 可选的字体设置 */
+      opacity: 1;
+      margin-top: 130px;
+    "
+  >
+    <p>Thank you for visiting</p>
+    <p>High Country Health and Wellness Hub</p>
+  </div>
+
+  <div
+    style="
+      width: 100%;
+      height: 650px;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      padding-top: 100px;
+    "
+  >
+    <div style="width: 450px; height: 360px; background-color: white">
+      <a
+        href="/info?search=timetable"
+        style="text-decoration: none; color: black"
+      >
+        <img
+          src="/static/coverImag-1.png"
+          alt="Image"
+          style="width: 450px; height: 240px"
+        />
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 30px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Class Timetable
+        </p>
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          View our Class Timetable
+        </p>
+      </a>
+    </div>
+
+    <div style="width: 450px; height: 360px; background-color: white">
+      <a
+        href="/info?search=descriptions"
+        style="text-decoration: none; color: black"
+      >
+        <img
+          src="/static/coverImag-2.png"
+          alt="Image"
+          style="width: 450px; height: 240px"
+        />
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 30px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Class Descriptions
+        </p>
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Find infromation about Class
+        </p>
+      </a>
+    </div>
+    <div style="width: 450px; height: 360px; background-color: white">
+      <a
+        href="/info?search=offerings"
+        style="text-decoration: none; color: black"
+      >
+        <img
+          src="/static/coverImag-3.png"
+          alt="Image"
+          style="width: 450px; height: 240px"
+        />
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 30px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Therapy Offerings
+        </p>
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Choose your favorite therapy session
+        </p>
+      </a>
+    </div>
+
+    <div style="width: 450px; height: 360px; background-color: white">
+      <a
+        href="/info?search=therapist"
+        style="text-decoration: none; color: black"
+      >
+        <img
+          src="/static/coverImag-4.png"
+          alt="Image"
+          style="width: 450px; height: 240px"
+        />
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 30px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Our Therapist
+        </p>
+        <p
+          style="
+            margin: 5px 0 0 20px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 1;
+          "
+        >
+          Check out our therapist team
+        </p>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container mt-5" style="margin-top: 30px">
+  <h2>Payments History</h2>
+  <div class="row mb-3" style="margin-top: 50px">
+    <div class="col-md-3">
+      <select class="form-control" id="amountFilter" onchange="filterTable()">
+        <option value="">Select Amount</option>
+        {% set amounts = [] %} {% for payment in payments %} {% if payment[1]
+        not in amounts %}
+        <option value="{{ payment[1] }}">${{ payment[1] }}</option>
+        {% if amounts.append(payment[1]) %}{% endif %} {% endif %} {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" id="typeFilter" onchange="filterTable()">
+        <option value="">Select Type</option>
+        <option value="Membership">Membership</option>
+        <option value="Session">Session</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <input
+        type="date"
+        class="form-control"
+        id="dateFilter"
+        onchange="filterTable()"
+      />
+    </div>
+    <div class="col-md-3">
+      <select class="form-control" id="statusFilter" onchange="filterTable()">
+        <option value="">Select Status</option>
+        <option value="Successful">Successful</option>
+        <option value="Failed">Failed</option>
+      </select>
+    </div>
+  </div>
+  <div
+    style="
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      max-height: 75vb;
+    "
+  >
+    <table class="table table-striped" id="paymentTable">
+      <thead>
+        <tr>
+          <th>Payment ID</th>
+          <th>Member Name</th>
+          <th>Amount</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for payment in payments %}
+        <tr>
+          <td>{{ payment[0] }}</td>
+          <!-- Payment ID -->
+          <td>{{ payment[6] }} {{ payment[7] }}</td>
+          <td>${{ payment[1] }}</td>
+          <!-- Amount -->
+          <td>{{ payment[2] }}</td>
+          <!-- Type -->
+          <td>{{ payment[3] }}</td>
+          <!-- Date -->
+          <td>{{ payment[4] }}</td>
+          <!-- Status -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  function filterTable() {
+    var amountFilter = document.getElementById("amountFilter").value; // Keep as string without toUpperCase
+    var typeFilter = document.getElementById("typeFilter").value.toUpperCase();
+    var dateFilter = document.getElementById("dateFilter").value;
+    var statusFilter = document
+      .getElementById("statusFilter")
+      .value.toUpperCase();
+    var table = document.getElementById("paymentTable");
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < tr.length; i++) {
+      var tdAmount = tr[i]
+        .getElementsByTagName("td")[2]
+        .textContent.trim()
+        .replace("$", ""); // Remove dollar sign and trim space
+      var tdType = tr[i]
+        .getElementsByTagName("td")[3]
+        .textContent.toUpperCase()
+        .trim();
+      var tdDate = tr[i].getElementsByTagName("td")[4].textContent.trim();
+      var tdStatus = tr[i]
+        .getElementsByTagName("td")[5]
+        .textContent.toUpperCase()
+        .trim();
+
+      // Check for exact matches or empty filter values
+      if (
+        (tdAmount === amountFilter || amountFilter === "") &&
+        (tdType === typeFilter || typeFilter === "") &&
+        (tdDate === dateFilter || dateFilter === "") &&
+        (tdStatus === statusFilter || statusFilter === "")
+      ) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+</script>
+
+{% endblock %}

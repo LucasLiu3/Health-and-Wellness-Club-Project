@@ -1,0 +1,27 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="content">
+  <div class="col-md-9 content-area">
+    <h2>Report Detail</h2>
+    <div class="row" style="margin-top: 50px">
+      <div class="col-md-5">
+        <p><strong>Room Id: </strong> </p>
+        <p><strong>Room Type: </strong> </p>
+        <p><strong>Room Name: </strong> </p>
+        <p><strong>Location: </strong> </p>
+        <p><strong>Description: </strong> </p>
+
+      </div>
+      <div class="col-md-3">
+        <p>{{record.Room_id}}</p>
+        <p>{{record.Room_type}}</p>
+        <p>{{record.Room_name}}</p>
+        <p>{{record.Location}}</p>
+        <p>{{record.Description}}</p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

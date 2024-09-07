@@ -1,0 +1,72 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      <h2>Class Detail</h2>
+      <!-- Flash message -->
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-success">
+        <ul>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %} {% endwith %}
+
+      <form method="POST" style="margin-top: 50px">
+        <div class="form-group">
+          <label for="class_name">Class Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="class_name"
+            name="class_name"
+            value="{{ class_detail[1] }}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" name="description">
+{{ class_detail[2] }}</textarea
+          >
+        </div>
+        <div class="form-group">
+          <label for="max_capacity">Max Capacity</label>
+          <input
+            type="text"
+            class="form-control"
+            id="max_capacity"
+            name="max_capacity"
+            value="{{ class_detail[3] }}"
+            pattern="^1[0-5]$|^10$"
+            title="please input number between 10 and 15"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="duration">Duration (min)</label>
+          <input
+            type="text"
+            class="form-control"
+            id="duration"
+            name="duration"
+            value="{{ class_detail[4] }}"
+            pattern="^(3[0-9]|[4-7][0-9]|80)$"
+            title="please input number between 30 and 100"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-primary" style="margin-left: 50px">
+          <a
+            href="/manager/class_timetable"
+            style="color: white; text-decoration: none"
+            >Cancel</a
+          >
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

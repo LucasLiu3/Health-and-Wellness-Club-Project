@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if record.Class_id != "" %}
+            <h2 class="mb-4">Update Class</h2>
+            {% else %}
+            <h2 class="mb-4">Insert Class</h2>
+            {% endif %}
+            {% for message in get_flashed_messages() %}
+            <div class="flash" style="color:red;font-size:20px">{{ message }}</div>
+            {% endfor %}
+            <input type="hidden" id="Class_id" name="Class_id" value="{{record.Class_id}}">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="Class_name">Class Name:</label>
+                    <input type="text" class="form-control" value="{{record.Class_name}}" required id="Class_name"
+                           name="Class_name"
+                           placeholder="Enter Class Name">
+
+                </div>
+                <div class="form-group">
+                    <label for="Description">Description:</label>
+                    <textarea class="form-control" id="Description" name="Description"
+                              rows="4">{{ record.Description }}</textarea>
+
+                </div>
+                <div class="form-group">
+                    <label for="MaxCapacity">MaxCapacity:</label>
+                    <input type="text" class="form-control" value="{{record.MaxCapacity}}" required id="MaxCapacity"
+                           name="MaxCapacity"
+                           placeholder="Enter MaxCapacity">
+
+                </div>
+                <div class="form-group">
+                    <label for="Duration">Duration:</label>
+                    <input type="text" class="form-control" value="{{record.Duration}}" required id="Duration"
+                           name="Duration"
+                           placeholder="Enter Duration">
+
+                </div>
+                <div class="form-group">
+                    <label for="Class_name">Therapist:</label>
+                    <select class="form-control" name="Therapist_id" id="Therapist_id">
+                        {% for therapist in Therapists %}
+                        {% if Therapist_id== therapist[0] %}
+                        <option value="{{therapist[0]}}" selected="selected">{{therapist[1]}}</option>
+                        {% else %}
+                        <option value="{{therapist[0]}}">{{therapist[1]}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <label for="Class_name">Room_num:</label>
+                    <select class="form-control" name="Room_num" id="Room_num">
+                        {% for Room in Rooms %}
+                        {% if Room_num== Room[0] %}
+                        <option value="{{Room[0]}}" selected="selected">{{Room[1]}}</option>
+                        {% else %}
+                        <option value="{{Room[0]}}">{{Room[1]}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+
+
+                </div>
+
+
+                <button type="submit" id="submitBtn" class="btn btn-dark">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

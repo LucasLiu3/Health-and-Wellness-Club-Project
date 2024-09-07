@@ -1,0 +1,74 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      <h2>Add new session schedule</h2>
+
+      <form
+        action="/manager/add-new-session"
+        method="POST"
+        style="margin-top: 50px"
+      >
+        <div class="form-group row">
+          <label for="Title" class="col-md-2 col-form-label"
+            >Session Name:</label
+          >
+          <div class="col-md-10">
+            <div class="col-md-10">
+              <select class="form-control" name="sessionId" required>
+                {% for session in sessionAll %}
+                <option value="{{session[0]}}">{{session[1]}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Title" class="col-md-2 col-form-label"
+            >Therapist Name:</label
+          >
+          <div class="col-md-10">
+            <div class="col-md-10">
+              <select class="form-control" name="therapistId" required>
+                {% for therapist in therapists %}
+                <option value="{{therapist[0]}}">
+                  {{therapist[1]}} {{therapist[2]}}
+                </option>
+                {% endfor%}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="Title" class="col-md-2 col-form-label"
+            >Room Number:</label
+          >
+          <div class="col-md-10">
+            <div class="col-md-10">
+              <select class="form-control" name="roomId" required>
+                {% for room in room_list %}
+                <option value="{{room}}">{{room}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary">
+          Add
+        </button>
+        <button type="button" class="btn btn-primary" style="margin-left: 50px">
+          <a
+            href="/manager/session-schedules"
+            style="color: white; text-decoration: none"
+            >Cancel</a
+          >
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

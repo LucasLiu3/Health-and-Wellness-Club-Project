@@ -1,0 +1,25 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="content">
+  <div class="col-md-9 content-area">
+    <h2>Report Detail</h2>
+    <div class="row" style="margin-top: 50px">
+      <div class="col-md-5">
+        <p><strong>Report_id: </strong> </p>
+        <p><strong>Report Title: </strong> </p>
+        <p><strong>Report Content: </strong> </p>
+        <p><strong>Date: </strong> </p>
+
+      </div>
+      <div class="col-md-3">
+        <p>{{record.Report_id}}</p>
+        <p>{{record.Report_title}}</p>
+        <p>{{record.Report_content}}</p>
+        <p>{{record.Date}}</p>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'layout.html' %} {% block content %}
+<style>
+  .info-row {
+    font-size: 1.5em; /* Increase font size */
+    line-height: 1.5; /* Adjust line height */
+    text-align: left; /* Align text to the left */
+    margin-bottom: 10px; /* Reduce space between rows */
+  }
+  .info-row .col-md-6 {
+    padding: 0; /* Remove padding */
+  }
+  .info-row .col-md-6:first-child {
+    font-weight: bold; /* Make labels bold */
+  }
+</style>
+<div id="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      <h2>Timetable Detail</h2>
+
+      <a href="/manager/timetable">
+        <button
+          type="button"
+          class="btn btn-dark"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          < Back
+        </button>
+      </a>
+      <div class="container" style="margin-top: 50px">
+        <div class="row info-row">
+          <div class="col-md-6">Day:</div>
+          <div class="col-md-6">{{record.Day}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Class Name:</div>
+          <div class="col-md-6">{{record.Class_name}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Max Capacity:</div>
+          <div class="col-md-6">{{record.MaxCapacity}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Duration:</div>
+          <div class="col-md-6">{{record.Duration}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Therapist Name:</div>
+          <div class="col-md-6">{{record.First_name}} {{record.Last_name}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Therapist Email:</div>
+          <div class="col-md-6">{{record.Email}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Room_num:</div>
+          <div class="col-md-6">{{record.Room_num}}</div>
+        </div>
+        <div class="row info-row">
+          <div class="col-md-6">Description:</div>
+          <div class="col-md-6">{{record.Description}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

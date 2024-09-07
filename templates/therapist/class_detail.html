@@ -1,0 +1,75 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="content" style="margin-top: 30px">
+  <div
+    class="row justify-content-center"
+    style="overflow-y: scroll; max-height: 90vb"
+  >
+    <div
+      class="col-md-9 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>
+        {% if class_detail %} Class Detail {% elif Member_detail %} Member
+        Detail {% endif %}
+      </h2>
+      <a href="/therapist/my-class-timetable">
+        <button
+          type="button"
+          class="btn btn-dark"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          &lt; Back
+        </button>
+      </a>
+
+      {% if class_detail %}
+      <table class="table table-striped table-bordered table-hover">
+        <tr>
+          <th>Class ID</th>
+          <th>Class Name</th>
+          <th>Description</th>
+          <th>MaxCapacity</th>
+          <th>Duration</th>
+          <th>Room Number</th>
+        </tr>
+
+        <tr>
+          <td>{{class_detail[0]}}</td>
+          <td>{{class_detail[1]}}</td>
+          <td>{{class_detail[2]}}</td>
+          <td>{{class_detail[3]}}</td>
+          <td>{{class_detail[4]}}</td>
+          <td>{{class_detail[6]}}</td>
+        </tr>
+      </table>
+
+      {% elif member_detail %}
+
+      <table class="table table-striped table-bordered table-hover">
+        <tr>
+          <th>Title</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Position</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Address</th>
+        </tr>
+
+        <tr>
+          <td>{{member_detail[1]}}</td>
+          <td>{{member_detail[2]}}</td>
+          <td>{{member_detail[3]}}</td>
+          <td>{{member_detail[4]}}</td>
+          <td>{{member_detail[5]}}</td>
+          <td>{{member_detail[6]}}</td>
+          <td>{{member_detail[7]}}</td>
+        </tr>
+      </table>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

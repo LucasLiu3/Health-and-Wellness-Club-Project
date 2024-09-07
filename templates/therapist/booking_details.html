@@ -1,0 +1,46 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      <h2>Member Detail</h2>
+      <a href="/therapist/view_bookings">
+        <button
+          type="button"
+          class="btn btn-dark"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          &lt; Back
+        </button>
+      </a>
+
+          <div class="row" style="margin-top: 50px">
+            <div class="col-md-5" style="text-align: left">
+            <div style="padding-left: 300px">
+              <p><strong>Title: </strong> {{booking[1]}}</p>
+              <p><strong>First Name: </strong> {{booking[2]}}</p>
+              <p><strong>Last Name: </strong> {{booking[3]}}</p>
+              <p><strong>Position: </strong> {{booking[4]}}</p>
+              <p><strong>Email: </strong> {{booking[5]}}</p>
+              <p><strong>Phone Number: </strong> {{booking[6]}}</p>
+              <p><strong>Address: </strong> {{booking[7]}}</p>
+              <p><strong>Birth: </strong> {{booking[8]}}</p>
+              <p><strong>Heath Information: </strong> {{booking[10]}}</p>
+            </div>
+          </div>
+            <div class="col-md-4">
+              <img
+                src="/static/{{booking[9]}}"
+                style="width: 300px; height: 300px"
+                alt="Image"
+                class="img-fluid"
+              />
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      {% endblock %}
+    </div>
+  </div>
+</div>

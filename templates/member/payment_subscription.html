@@ -1,0 +1,241 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div
+      class="col-md-9 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>Renew Subscription</h2>
+      <div class="row mb-3" style="margin-top: 50px">
+        <div class="col-md-6">
+          <label for="expire_time">Current Membership Expiration:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="expire_time"
+            name="expire_time"
+            value="{{ expire_time.strftime('%d-%m-%Y') }}"
+            readonly
+          />
+        </div>
+      </div>
+      <form method="POST" id="paymentForm" class="needs-validation" novalidate>
+        <div class="form-group">
+          <label for="renewal_period">Renewal Period:</label>
+          <select
+            class="form-control"
+            id="renewal_period"
+            name="renewal_period"
+            required
+          >
+            <option value="">Select Renewal Period</option>
+            <option value="monthly">Monthly</option>
+            <option value="annually">Annually</option>
+          </select>
+          <div class="invalid-feedback">Please select a renewal period.</div>
+        </div>
+        <div class="form-group">
+          <label for="payment_amount">Payment Amount($):</label>
+          <input
+            type="text"
+            class="form-control"
+            id="payment_amount"
+            name="payment_amount"
+            readonly
+          />
+        </div>
+        <div class="form-group">
+          <label for="renewal_date">Renewal Date:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="renewal_date"
+            name="renewal_date"
+            readonly
+          />
+        </div>
+        <div class="form-group">
+          <label for="bankcard">Bank Card:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="bankcard"
+            name="bankcard"
+            pattern="\d{16}"
+            title="Please enter a 16-digit bank card number."
+            placeholder="16-digit bank card number"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter a valid bank card number.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="card_expire_day">Card Expire Day:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="card_expire_day"
+            name="card_expire_day"
+            pattern="(0[1-9]|1[0-2])\/\d{2}"
+            title="Please enter the card expiration date in mm/yy format."
+            placeholder="mm/yy"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter a valid card expiration date.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="security_code">Security Code:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="security_code"
+            name="security_code"
+            pattern="\d{3}"
+            title="Please enter a 3-digit security code."
+            placeholder="xxx"
+            required
+          />
+          <div class="invalid-feedback">
+            Please enter a valid security code.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          Pay
+        </button>
+        <button class="btn btn-primary" style="margin-left: 50px">
+          <a
+            href="/manage_subscription"
+            style="color: white; text-decoration: none"
+            >Cancel</a
+          >
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Add form validation using JavaScript
+  (function () {
+    "use strict";
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll(".needs-validation");
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+
+    // Client-side validation for Card Expire Day
+    var cardExpireDayInput = document.getElementById("card_expire_day");
+    cardExpireDayInput.addEventListener("blur", function () {
+      // Parse the input date in mm/yy format
+      var enteredMonthYear = this.value.split("/");
+      var enteredMonth = parseInt(enteredMonthYear[0]);
+      var enteredYear = parseInt(enteredMonthYear[1]) + 2000; // Add 2000 to get the full year
+
+      // Create a new Date object for the entered date
+      var enteredDate = new Date(enteredYear, enteredMonth - 1); // Subtract 1 from the month as it is zero-indexed
+
+      // Get the current date
+      var currentDate = new Date();
+
+      // Check if the entered date is in the future
+      if (enteredDate < currentDate) {
+        alert("Please enter a future date for Card Expire Day.");
+        this.value = ""; // Clear the input field
+        this.focus(); // Set focus back to the input field
+      }
+    });
+
+    // Set the payment amount and renewal date based on the renewal period
+    var renewalPeriodSelect = document.getElementById("renewal_period");
+    var paymentAmountInput = document.getElementById("payment_amount");
+    var renewalDateInput = document.getElementById("renewal_date");
+    var expireDayInput = document.getElementById("expire_day");
+    var expireTime = new Date("{{ expire_time }}");
+    const today = new Date();
+
+    renewalPeriodSelect.addEventListener("change", function () {
+      var selectedRenewalPeriod = this.value;
+
+      if (selectedRenewalPeriod === "monthly") {
+        paymentAmountInput.value = 200;
+        var nextRenewalDate = new Date(expireTime);
+        if (nextRenewalDate < today) {
+          nextRenewalDate.setMonth(today.getMonth() + 1);
+          if (nextRenewalDate.getDate() > today.getDate()) {
+            nextRenewalDate.setDate(today.getDate());
+          }
+
+          const year = nextRenewalDate.getFullYear();
+          const month = (nextRenewalDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0");
+          const day = nextRenewalDate.getDate().toString().padStart(2, "0");
+
+          renewalDateInput.value = `${day}-${month}-${year}`;
+        } else {
+          nextRenewalDate.setMonth(expireTime.getMonth() + 1);
+
+          const year = nextRenewalDate.getFullYear();
+          const month = (nextRenewalDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0");
+          const day = nextRenewalDate.getDate().toString().padStart(2, "0");
+
+          renewalDateInput.value = `${day}-${month}-${year}`;
+        }
+      } else if (selectedRenewalPeriod === "annually") {
+        paymentAmountInput.value = 2000;
+        var nextRenewalDate = new Date(expireTime);
+
+        if (nextRenewalDate < today) {
+          nextRenewalDate.setFullYear(today.getFullYear() + 1);
+          nextRenewalDate.setMonth(today.getMonth());
+          nextRenewalDate.setDate(today.getDate());
+
+          const year = nextRenewalDate.getFullYear();
+          const month = (nextRenewalDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0");
+          const day = nextRenewalDate.getDate().toString().padStart(2, "0");
+
+          renewalDateInput.value = `${day}-${month}-${year}`;
+        } else {
+          nextRenewalDate.setFullYear(expireTime.getFullYear() + 1);
+
+          const year = nextRenewalDate.getFullYear();
+          const month = (nextRenewalDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0");
+          const day = nextRenewalDate.getDate().toString().padStart(2, "0");
+
+          renewalDateInput.value = `${day}-${month}-${year}`;
+        }
+      }
+    });
+
+    // Function to format date as MM/YY
+    function getFormattedDate(date) {
+      var month = (date.getMonth() + 1).toString().padStart(2, "0");
+      var year = date.getFullYear().toString().slice(-2);
+      return month + "/" + year;
+    }
+  })();
+</script>
+{% endblock %}

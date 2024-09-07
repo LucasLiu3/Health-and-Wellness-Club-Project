@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="content" style="margin-top: 30px;">
+  <div class="row justify-content-center">
+    <div
+      class="col-md-9 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>News Management</h2>
+
+      <a href="/manager/news_management">
+        <button
+          type="button"
+          class="btn btn-dark"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          < Back
+        </button>
+      </a>
+
+      <div
+        style=" margin-top: 130px;margin-left: 200px; "
+      >
+        <form action="/manager/edit_news/{{newsDetail[0]}}" method="POST">
+            <div style=" display: flex; align-items: center; margin-top: 10px">
+                <label for="" style="font-size: 30px;">News Title:</label>
+                <input value="{{newsDetail[1]}}" type="text" style="margin-left: 55px;height: 35px;width: 775px;font-size: 16px;" name="newsTitle" required></input>
+                </div>
+
+                <div style="display: flex; align-items: center; margin-top: 10px;">
+                <label for="" style="font-size: 30px;">News Content:</label>
+                <textarea rows="15" cols="100" name="newsContent" style="margin-left: 5px;" required>{{newsDetail[2]}}</textarea>
+                </div>
+                
+                <div style="margin-top: 50px;margin-right: 300px;">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                  <button type="reset" class="btn btn-primary" style="margin-left: 50px;">Cacnel</button>
+            </div>
+        </form>
+    </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

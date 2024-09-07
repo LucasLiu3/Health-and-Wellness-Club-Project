@@ -1,0 +1,58 @@
+{% extends 'layout.html' %} {% block content %}
+<div id="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div class="col-md-9 content-area">
+      <h2>Member Detail</h2>
+
+      <a href="/manager/members">
+        <button
+          type="button"
+          class="btn btn-dark"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          &lt; Back
+        </button>
+      </a>
+      <div class="row" style="margin-top: 50px">
+        <div class="col-md-5" style="text-align: left">
+          <div style="padding-left: 300px">
+            <p><strong>Title: </strong> {{record.Title}}</p>
+            <p><strong>First Name: </strong> {{record.First_name}}</p>
+            <p><strong>Last Name: </strong> {{record.Last_name}}</p>
+            <p><strong>Position: </strong> {{record.Position}}</p>
+            <p><strong>Email: </strong> {{record.Email}}</p>
+            <p><strong>Phone Number: </strong> {{record.Phone_number}}</p>
+            <p><strong>Address: </strong> {{record.Address}}</p>
+            <p><strong>Birth: </strong> {{record.date_of_Birth}}</p>
+            <p>
+              <strong>Heath Information: </strong> {{record.Heath_Information}}
+            </p>
+            {% if record.Status== "active" %}
+            <p>
+              <strong>Status: </strong
+              ><span style="color: green"> {{record.Status}}</span>
+            </p>
+            {% else %}
+            <p>
+              <strong>Status: </strong
+              ><span style="color: red"> {{record.Status}}</span>
+            </p>
+
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <img
+            src="/static/{{record.Image}}"
+            style="width: 300px; height: 300px"
+            alt="Image"
+            class="img-fluid"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

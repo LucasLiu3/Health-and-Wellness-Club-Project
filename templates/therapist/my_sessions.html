@@ -1,0 +1,89 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div
+      class="col-md-10 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>My Sessions</h2>
+
+      <a href="/therapist/add_new_session">
+        <button
+          type="button"
+          class="btn btn-primary"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          Add new session
+        </button>
+      </a>
+
+      <table
+        class="table table-striped table-bordered table-hover"
+        style="margin-top: 50px"
+      >
+        <thead>
+          <tr>
+            <th>Session ID</th>
+            <th>Session Name</th>
+            <th>Description</th>
+            <th>Room Number</th>
+            <th>Duration</th>
+            <th>Fees</th>
+            <th colspan="4">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for session in sessions %}
+          <tr>
+            <td>{{ session[0] }}</td>
+            <td>{{ session[1] }}</td>
+            <td>{{ session[2] }}</td>
+            <td>{{ session[3] }}</td>
+            <td>{{ session[4] }} min</td>
+            <td>${{ session[5] }}</td>
+            <td>
+              <a
+                href="{{ url_for('therapist_edit_session', session_id=session[0]) }}"
+                class="btn btn-primary"
+                >Edit</a
+              >
+            </td>
+            <td style="width: 120px">
+              <a
+                href="{{ url_for('set_fees', session_id=session[0]) }}"
+                class="btn btn-info"
+                >Set Fees</a
+              >
+            </td>
+            <td>
+              <button
+                onclick="confirmDelete('{{ session[0] }}')"
+                class="btn btn-danger"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <p style="color: red">{{messages[0]}}</p>
+      {% endif %} {% endwith %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function confirmDelete(sessionId) {
+    const baseUrl =
+      "{{ url_for('therapist_delete_session',session_id=session[0]) }}";
+    if (confirm("Are you sure you want to delete this session?")) {
+      window.location.href = baseUrl + sessionId;
+    }
+  }
+</script>
+
+{% endblock %}

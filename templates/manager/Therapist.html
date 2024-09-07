@@ -1,0 +1,80 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="content" style="margin-top: 30px">
+  <div class="row justify-content-center">
+    <div
+      class="col-md-9 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>Therapist List</h2>
+      <button
+        type="button"
+        onclick="location.href='/manager/therapist_update?username='"
+        class="btn btn-primary"
+        style="float: left; margin-top: 20px; margin-bottom: 20px"
+      >
+        Add New Therapist
+      </button>
+      <table
+        class="table table-striped table-bordered table-hover"
+        style="margin-top: 50px"
+      >
+        <tr>
+          <th>User Name</th>
+          <th>Title</th>
+          <th>Full Name</th>
+          <th>Status</th>
+          <th colspan="3">Action</th>
+        </tr>
+        {% for therapist in therapists %}
+        <tr>
+          <td>{{therapist[0]}}</td>
+          <td>{{therapist[1]}}</td>
+          <td>{{therapist[2]}} {{therapist[3]}}</td>
+          <td>{{therapist[8]}}</td>
+
+          <td>
+            <button
+              type="button"
+              onclick="location.href='/manager/therapist_detail?username={{therapist[0]}}'"
+              class="btn btn-primary"
+            >
+              Detail
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              onclick="location.href='/manager/therapist_update?username={{therapist[0]}}'"
+              class="btn btn-primary"
+            >
+              Update
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              onclick="confirmDelete('/manager/therapist_delete?username={{therapist[0]}}')"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  function confirmDelete(url) {
+    if (confirm("Are you want to delete this info?")) {
+      window.location.href = url;
+    } else {
+      return false;
+    }
+  }
+</script>
+
+{% endblock %}

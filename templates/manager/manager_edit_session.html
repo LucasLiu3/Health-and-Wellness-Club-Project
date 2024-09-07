@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Session</h2>
+    <form method="POST" style="max-width: 600px; margin: auto;">
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="session_name" style="font-weight: bold;">Session Name</label>
+            <input type="text" class="form-control" id="session_name" name="session_name" value="{{ session[0] }}" required style="font-size: 14px; height: 36px;">
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="therapist_id" style="font-weight: bold;">Therapist</label>
+            <select class="form-control" id="therapist_id" name="therapist_id" style="font-size: 14px; height: 36px;">
+                {% for therapist in therapists %}
+                <option value="{{ therapist[0] }}" {% if therapist[0] == session[2] %}selected{% endif %}>{{ therapist[1] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <label for="room_num" style="font-weight: bold;">Room Number</label>
+            <select class="form-control" id="room_num" name="room_num" style="font-size: 14px; height: 36px;">
+                {% for room in rooms %}
+                <option value="{{ room[0] }}" {% if room[0] == session[3] %}selected{% endif %}>{{ room[0] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="font-size: 14px; padding: 6px 12px;">Update Session</button>
+    </form>
+</div>
+{% endblock %}

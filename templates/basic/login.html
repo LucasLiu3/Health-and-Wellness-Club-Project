@@ -1,0 +1,101 @@
+{% extends './basic/base.html' %} {% block content %}
+<header class="header">
+  <nav
+    class="nav"
+    style="
+      margin-top: 10px;
+      border-bottom: solid 1px black;
+      background-color: #444;
+    "
+  >
+    <a href="/">
+      <img
+        src="../static/logo-white.png"
+        alt="club logo"
+        class="nav__logo"
+        id="logo"
+      />
+    </a>
+    <ul class="nav__links">
+      <li class="nav__item">
+        <a class="nav__link nav__link--btn" href="/login" style="color: white"
+          >Log in</a
+        >
+      </li>
+      <li class="nav__item">
+        <a
+          class="nav__link nav__link--btn"
+          href="/register"
+          style="color: white; border: 1px solid white"
+          >Sign Up</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <div
+    style="
+      margin-top: 200px;
+      background-color: #fff;
+
+      width: 446px;
+      height: 429px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 50px;
+    "
+  >
+    <h2
+      style="
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        line-height: 1.3;
+        color: #28b487;
+      "
+    >
+      Log into your account
+    </h2>
+    <form action="/login" method="post" style="font-size: 16px">
+      <div style="margin-top: 50px">
+        <label for="username" style="font-weight: bold">Username :</label>
+        <input
+          type="text"
+          name="username"
+          style="background-color: #f2f2f2"
+          required
+        />
+      </div>
+      <div style="margin-top: 50px">
+        <label for="password" style="font-weight: bold">Password :</label>
+        <input
+          type="password"
+          name="password"
+          required
+          style="margin-left: 6px; background-color: #f2f2f2"
+        />
+      </div>
+      <div style="margin-top: 30px">
+        <p style="color: red; text-align: center">{{msg}}</p>
+
+        <button
+          type="submit"
+          style="
+            border-radius: 10rem;
+            border: none;
+            width: 100px;
+            height: 50px;
+            background-color: #55c57a;
+            color: #fff;
+            font-size: 20px;
+          "
+        >
+          Log in
+        </button>
+      </div>
+    </form>
+  </div>
+</header>
+{% endblock %}

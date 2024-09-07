@@ -1,0 +1,92 @@
+{% extends 'layout.html' %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h2 style="margin-top: 30px">Financial Report</h2>
+
+    <div style="overflow-y: scroll; max-height: 85vb">
+      <div style="margin-top: 30px">
+        <canvas
+          id="chart1"
+          width="1000"
+          height="400"
+          style="margin: 0 auto"
+        ></canvas>
+
+        <canvas
+          id="chart2"
+          width="1000"
+          height="400"
+          style="margin: 0 auto"
+        ></canvas>
+      </div>
+
+      <div>
+        <canvas
+          id="chart3"
+          width="1200"
+          height="400"
+          style="margin: 0 auto"
+        ></canvas>
+      </div>
+    </div>
+    <script>
+      var chart_type = {{ chart_type | tojson | safe }};
+      var chart_month = {{ chart_month | tojson | safe }};
+      var chart_year = {{ chart_year | tojson | safe }}
+
+      function createChart(id, title,labels, data, backgroundColor, borderColor) {
+            var ctx = document.getElementById(id).getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        backgroundColor: backgroundColor,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        var labels1 = chart_type.map(item => item.label)
+        var data1 = chart_type.map(item => item.value);
+        var backgroundColor1 = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'];
+        var borderColor1 = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'];
+
+        var labels2 = chart_month.map(item => item.label)
+        var data2 = chart_month.map(item => item.value);
+        var backgroundColor2 = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', "rgba(153, 102, 255, 0.2)",
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(255, 159, 64, 0.2)"];
+        var borderColor2 = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', "rgba(153, 102, 255, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(255, 159, 64, 1)"];
+
+        var labels3 = chart_year.map(item => item.label)
+        var data3 = chart_year.map(item => item.value);
+        var backgroundColor3 = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'];
+        var borderColor3 = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'];
+
+        createChart('chart1','Method', labels1, data1, backgroundColor1, borderColor1);
+        createChart('chart2','Motn', labels2, data2, backgroundColor2, borderColor2);
+        createChart('chart3','Year', labels3, data3, backgroundColor3, borderColor3);
+    </script>
+  </body>
+</html>
+
+{% endblock %}

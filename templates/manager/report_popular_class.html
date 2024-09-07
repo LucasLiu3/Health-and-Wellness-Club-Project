@@ -1,0 +1,60 @@
+{% extends 'layout.html' %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h2 style="margin-top: 30px">Popular Class Report</h2>
+
+    <div style="overflow-y: scroll; max-height: 85vb">
+      <div style="margin-top: 30px">
+        <canvas
+          id="chart1"
+          width="1000"
+          height="400"
+          style="margin: 0 auto"
+        ></canvas>
+      </div>
+    </div>
+    <script>
+      var popular_class = {{ popular_class | tojson | safe }};
+
+
+      function createChart(id, title,labels, data, backgroundColor, borderColor) {
+            var ctx = document.getElementById(id).getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: title,
+                        data: data,
+                        backgroundColor: backgroundColor,
+                        borderColor: borderColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        var labels1 = popular_class.map(item => item.label)
+        var data1 = popular_class.map(item => item.value);
+        var backgroundColor1 = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'];
+        var borderColor1 = ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'];
+
+
+        createChart('chart1','Class Ranking', labels1, data1, backgroundColor1, borderColor1);
+    </script>
+  </body>
+</html>
+
+{% endblock %}

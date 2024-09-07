@@ -1,0 +1,46 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="content" style="margin-top: 30px">
+  <div
+    class="row justify-content-center"
+    style="overflow-y: scroll; max-height: 90vb"
+  >
+    <div
+      class="col-md-9 content-area"
+      style="margin-top: 10px; margin-left: 30px"
+    >
+      <h2>My Class Timetable</h2>
+
+      <a href="/therapist/class-timetable">
+        <button
+          type="button"
+          class="btn btn-dark"
+          style="float: left; margin-top: 20px; margin-bottom: 20px"
+        >
+          &lt; Back
+        </button>
+      </a>
+
+      <table class="table table-striped table-bordered table-hover">
+        <tr>
+          <th>Date</th>
+          <th>Class Name</th>
+          <th>Therapist Name</th>
+          <th>Room Number</th>
+        </tr>
+        {% for class in myClasses %}
+        <tr>
+          <td>{{class[0]}}</td>
+          <td>
+            <a href="/therapist_class_detail/{{class[1]}}">{{class[2]}}</a>
+          </td>
+          <td>{{class[4]}} {{class[5]}}</td>
+          <td>{{class[6]}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

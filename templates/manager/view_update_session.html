@@ -1,0 +1,39 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container my-5">
+  <h2 class="mb-4">Update Session</h2>
+  {% with messages = get_flashed_messages() %} {% if messages %}
+  <div class="alert alert-success">
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %} {% endwith %}
+  <form method="POST">
+    <div class="form-group">
+      <label for="name">Session Name</label>
+      <input class="form-control" id="name" name="name" value="{{ details[0] }}"></input
+      >
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        class="form-control"
+        id="description"
+        name="description"
+        rows="3"
+      >
+{{ details[1] }}</textarea
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+
+    <button type="button" class="btn btn-primary" style="margin-left: 50px">
+      <a href="/manager/therapeutic_sessions" style="color: white; text-decoration: none"
+        >Cancel</a
+      >
+    </button>
+  </form>
+</div>
+{% endblock %}
